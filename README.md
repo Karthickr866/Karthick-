@@ -1,39 +1,41 @@
-@relation student
+import numpy as np
 
-@attribute age <30,30-40,40) @attribute income (low, medium, high @attribute student (yes, no) @attribute credit-rating (fair, excellent)
+import pandas as pd
 
-@attribute buyspe (yes, no)
+import matplotlib.pyplot as plt
 
-@data
+from sklearn.cluster import KMeans
 
-%
+data = pd.read_csv("D:\Technologies \ML Datasets\Country_clusters.csv")
 
-<30, high, no, fair, no
+plt.scatter(data['Longitude'], data['Latitude'])
 
-<30, high, no, excellent, no
+plt.xlim(-180, 180)
 
-30-40, high, no, fair, yes
+plt.ylim(-90, 90)
 
->40, medium, no, fair, yes
+plt.xlabel("Longitude")
 
->40, low, yes, fair, yes
+plt.ylabel("Latitude")
 
->40, low, yes, excellent, no
+plt.show()
 
-30-40, low, yes, excellent, yes
+x = data.iloc[:, 1:3]
 
-<30, medium, no, fair, no
+kmeans = KMeans(3)
 
-<30, low, yes, fair, no
+kmeans.fit(x)
 
->>40, medium, yes, fair, yes
+identified clusters = kmeans.fit_predict(x)
 
-<30, medium, yes, excellent, yes
+data_with_clusters = data.copy()
 
-30-40, medium, no, excellent, yes
+data_with_clusters ['Clusters'] = identified_clusters
 
-30-40, high, yes, fair, yes
+plt.scatter(data_with_clusters['Longitude'], data_with_clusters['Latitude'], c=data_with_clusters['Clusters'], cmap='rainbow')
 
->40, medium, no, excellent, no
+plt.xlabel("Longitude")
 
-%
+plt.ylabel("Latitude")
+
+plt.show()
